@@ -4,7 +4,18 @@
   "description": "risevest test",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start:dev": "ts-node-dev -r tsconfig-paths/register -r ts-node-dev --respawn ./src/server.ts",
+    "start": "node dist/server.js",
+    "prebuild:dev": "rm -rf dist/*",
+    "prebuild": "rm -rf dist/*",
+    "build:dev": "tsc --project tsconfig.json && tscpaths -p tsconfig.json -s ./src -o ./dist && tsc --watch --preserveWatchOutput",
+    "build": "tsc",
+    "buildtodist": "tsc --project tsconfig.json && tscpaths -p tsconfig.json -s . -o ./dist",
+    "prettier": "prettier \"**/*.+(ts|js|json)\"",
+    "lint": "eslint --ext .ts,.js src/**",
+    "lint-fix": "npm run lint -- --fix",
+    "check-format": "npm run prettier -- --check",
+    "format": "npm run prettier -- --write"
   },
   "repository": {
     "type": "git",
@@ -17,6 +28,7 @@
   },
   "homepage": "https://github.com/danoseun/sbet-rise#readme",
   "dependencies": {
+    "app-root-path": "^3.1.0",
     "celebrate": "^15.0.1",
     "compression": "^1.7.4",
     "cors": "^2.8.5",

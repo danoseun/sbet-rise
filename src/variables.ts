@@ -15,7 +15,7 @@ const variables = {
   },
 
   auth: {
-
+    rounds: Number(process.env.ROUNDS)
   },
 
   logs: {

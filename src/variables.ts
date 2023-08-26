@@ -15,7 +15,9 @@ const variables = {
   },
 
   auth: {
-    rounds: Number(process.env.ROUNDS)
+    rounds: Number(process.env.ROUNDS),
+    secret: process.env.JWT_SECRET,
+    jwtExpiryTime: process.env.JWT_EXPIRY_time
   },
 
   logs: {

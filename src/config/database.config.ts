@@ -1,9 +1,9 @@
-import { Pool } from 'pg';
+import { Pool, PoolConfig } from 'pg';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
-let connection;
+let connection: PoolConfig;
 
 if (process.env.NODE_ENV === 'test') {
   connection = {

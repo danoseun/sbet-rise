@@ -6,6 +6,7 @@ import helmet from 'helmet';
 
 import { handleErrors as errorMiddleware } from './middleware/error';
 import { logger } from './utilities';
+import { router } from './routes';
 
 const app = express();
 
@@ -18,13 +19,15 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.get('/', (req, res) =>
+app.get('/v1', (req, res) =>
   res.status(200).json({
     status: 'success',
     message: 'server is up and running',
     data: null
   })
 );
+
+app.use('/v1', router);
 
 app.use(errorMiddleware);
 

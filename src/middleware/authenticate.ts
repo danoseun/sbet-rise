@@ -1,8 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
-import { NotBeforeError, TokenExpiredError } from 'jsonwebtoken';
+import { JsonWebTokenError, NotBeforeError, TokenExpiredError } from 'jsonwebtoken';
 import { findUser } from '../repository/user';
 import { NotAuthenticatedError } from '../errors/NotAuthenticatedError';
 import { JWT } from '../utilities';
+import { User } from '@src/interfaces';
 
 
 export const authenticate = () => {
@@ -22,7 +23,7 @@ export const authenticate = () => {
 
       const decoded = JWT.decode(token);
 
-      const user = await findUser({ id: decoded.id });
+      const user = await findUser(['%'+decoded.id+'%'] as Partial<User>);
 
       if (!user) {
         return next(new NotAuthenticatedError('Invalid token'));
@@ -37,6 +38,9 @@ export const authenticate = () => {
 
       if (error instanceof NotBeforeError) {
         return next(new NotAuthenticatedError('Token used prematurely'));
+      }
+      if(error instanceof JsonWebTokenError){
+        return next(new NotAuthenticatedError('Invalid token'));
       }
 
       return next(error);

@@ -30,4 +30,21 @@ export const createUserSchema = celebrate(
 );
 
 
+export const loginUserSchema = celebrate(
+    {
+      [Segments.BODY]: Joi.object().keys({
+        email: Joi.string().email().required().trim().lowercase().messages({
+          'string.email': `{{#label}} should be a valid email`,
+          'string.empty': `{{#label}} is not allowed to be empty`
+        }),
+        password: Joi.string()
+          .required()
+          .trim()
+      })
+    },
+    {
+      abortEarly: false
+    }
+  );
+
 

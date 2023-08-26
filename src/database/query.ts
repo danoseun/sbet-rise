@@ -1,6 +1,8 @@
 import pg from 'pg';
 import pool from '../config/database.config';
 import { logger } from '../utilities';
+import { User } from '@src/interfaces';
+
 
 export default {
   /**

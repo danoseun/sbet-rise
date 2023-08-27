@@ -6,7 +6,7 @@ const postsTable = `DROP TABLE IF EXISTS posts CASCADE;
             id SERIAL PRIMARY KEY NOT NULL,
             user_id INTEGER NOT NULL,
             content TEXT NOT NULL,
-            FOREIGN KEY (userId) references users (id) on delete cascade
+            FOREIGN KEY (user_id) references users (id) on delete cascade,
             created_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
             updated_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL
         )`;

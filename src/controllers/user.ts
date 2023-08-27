@@ -1,12 +1,12 @@
 import { RequestHandler } from 'express';
 import HttpStatus from 'http-status-codes';
-import { createUser, findUser, fetchAllUsers } from '@src/repository/user';
-import { ConflictError } from '@src/errors/ConflictError';
-import { ResourceNotFoundError } from '@src/errors/ResourceNotFoundError';
+import { createUser, findUser, fetchAllUsers } from '../repository/user';
+import { ConflictError } from '../errors/ConflictError';
+import { ResourceNotFoundError } from '../errors/ResourceNotFoundError';
 
-import type { User } from '@src/interfaces';
-import { hashPassword, comparePassword, respond, JWT } from '@src/utilities';
-import { BadRequestError } from '@src/errors/BadRequestError';
+import type { User } from '../interfaces';
+import { hashPassword, comparePassword, respond, JWT } from '../utilities';
+import { BadRequestError } from '../errors/BadRequestError';
 
 export const UserController = {
     createUser: (): RequestHandler => async(req, res, next) => {

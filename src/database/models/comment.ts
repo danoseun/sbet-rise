@@ -4,11 +4,11 @@ import { logger } from '../../utilities';
 const postsTable = `DROP TABLE IF EXISTS comments CASCADE;
         CREATE TABLE comments (
             id SERIAL PRIMARY KEY NOT NULL,
-            post_id INTEGER NOT NULL
+            post_id INTEGER NOT NULL,
             user_id INTEGER NOT NULL,
             content TEXT NOT NULL,
-            FOREIGN KEY (post_id) references posts (id) on delete cascade
-            FOREIGN KEY (user_id) references users (id) on delete cascade
+            FOREIGN KEY (post_id) references posts (id) on delete cascade,
+            FOREIGN KEY (user_id) references users (id) on delete cascade,
             created_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
             updated_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL
         )`;

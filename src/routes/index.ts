@@ -1,12 +1,12 @@
 import { Router } from 'express';
 
-import { createUserSchema, loginUserSchema } from '@src/validations/user';
-import { createPostSchema, fetchPostsForUserSchema } from '@src/validations/post';
-import { createCommentSchema, fetchCommentsForPostSchema } from '@src/validations/comments';
+import { createUserSchema, loginUserSchema } from '../validations/user';
+import { createPostSchema, fetchPostsForUserSchema } from '../validations/post';
+import { createCommentSchema, fetchCommentsForPostSchema } from '../validations/comments';
 
-import { authenticate } from '@src/middleware/authenticate';
+import { authenticate } from '../middleware/authenticate';
 
-import { UserController } from '@src/controllers/user';
+import { UserController } from '../controllers/user';
 
 export const router = Router();
 

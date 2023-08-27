@@ -10,14 +10,14 @@ import { BadRequestError } from '../errors/BadRequestError';
 
 export const UserController = {
     createUser: (): RequestHandler => async(req, res, next) => {
-        let params = [req.body.email, req.body.password];
+        let params = [req.body.email, req.body.name, req.body.password];
         try {
             const existingUser = await findUser(['%'+params[0]+'%'] as Partial<User>);
             if(existingUser){
                 throw new ConflictError('User already exists');
             }
             let user: User;
-            params[1] = hashPassword(params[1]);
+            params[2] = hashPassword(req.body.password);
             user = await createUser(params as Partial<User>)
             return respond<User>(res, user, HttpStatus.CREATED);
         } catch (error) {
@@ -40,7 +40,7 @@ export const UserController = {
             else {
                 accessToken = JWT.encode({ id: existingUser.id })
             }
-            return respond(res, accessToken, HttpStatus.OK);
+            return respond(res, {accessToken, id: existingUser.id}, HttpStatus.OK);
         } catch (error) {
             next(error)
         }

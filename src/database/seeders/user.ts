@@ -6,15 +6,15 @@ import { logger, hashPassword } from '../../utilities';
 
 dotenv.config();
 
-const hashedPassword = hashPassword('password')
+const hashedPassword = hashPassword('Password54@')
 
 const variables = [
-  ['userone@gmail.com', hashedPassword],
-  ['usertwo@gmail.com', hashedPassword],
-  ['userthree@gmail.com', hashedPassword],
-  ['userfour@gmail.com', hashedPassword]
+  ['userone@gmail.com', 'Gimba Kakanda', hashedPassword],
+  ['usertwo@gmail.com', 'Bosun Tijani', hashedPassword],
+  ['userthree@gmail.com', 'Boss Boy', hashedPassword],
+  ['userfour@gmail.com', 'Emi Lokan', hashedPassword]
 ];
-const sql = format('INSERT INTO users (email, password) VALUES %L returning id', variables);
+const sql = format('INSERT INTO users (email, name, password) VALUES %L returning id', variables);
 
 /**
   * Function representing usersSeeder

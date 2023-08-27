@@ -8,6 +8,7 @@ export const createUserSchema = celebrate(
         'string.email': `{{#label}} should be a valid email`,
         'string.empty': `{{#label}} is not allowed to be empty`
       }),
+      name: Joi.string().trim().required(),
       password: Joi.string()
         .required()
         .trim()

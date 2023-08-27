@@ -3,8 +3,7 @@ import { celebrate, Joi, Segments } from 'celebrate';
 export const createPostSchema = celebrate(
     {
       [Segments.BODY]: Joi.object().keys({
-        content: Joi.string().required(),
-        user_id:  Joi.number().positive().required()
+        content: Joi.string().trim().required()
       })
     },
     { abortEarly: false }
@@ -13,7 +12,7 @@ export const createPostSchema = celebrate(
   export const fetchPostsForUserSchema = celebrate(
     {
       [Segments.PARAMS]: Joi.object().keys({
-        user_id: Joi.number().positive().required()
+        id: Joi.number().positive().required()
       })
     },
     { abortEarly: false }

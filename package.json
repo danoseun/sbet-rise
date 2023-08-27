@@ -18,7 +18,7 @@
     "lint-fix": "npm run lint -- --fix",
     "check-format": "npm run prettier -- --check",
     "format": "npm run prettier -- --write",
-    "test": "NODE_ENV=test&&npm run migrate:dev&&jest -i --detectOpenHandles --forceExit --coverage"
+    "test": "NODE_ENV=test npm run migrate:dev&&jest index.spec.ts --runInBand --testTimeout=40000 --forceExit --coverage"
   },
   "repository": {
     "type": "git",

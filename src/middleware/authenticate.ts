@@ -28,7 +28,7 @@ export const authenticate = () => {
       if (!user) {
         return next(new NotAuthenticatedError('Invalid token'));
       }
-
+      
       res.locals.user = user;
       return next();
     } catch (error) {

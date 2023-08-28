@@ -24,3 +24,15 @@ export async function createCommentTable(): Promise<void> {
     logger.error(`commentTable ${error}`);
   }
 }
+
+
+const indexCommentTable = `CREATE INDEX idx_post_id ON comments(post_id);`;
+
+export async function indexCommentTableCreator(): Promise<void> {
+  try {
+    const create = await pool.query(indexCommentTable);
+    logger.info(`commentTableIndex: ${create.command}D`);
+  } catch (error) {
+    logger.error(`commentTableIndex ${error}`);
+  }
+}

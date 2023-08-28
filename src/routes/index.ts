@@ -14,6 +14,8 @@ export const router = Router();
 router.post('/users', createUserSchema, UserController.createUser())
 router.post('/login', loginUserSchema, UserController.loginUser())
 router.get('/users', authenticate(), UserController.fetchAllUsers());
+router.get('/unoptimized', UserController.fetchFeaturedUsersUnOptimized);
+router.get('/optimized', UserController.fetchFeaturedUsersOptimized);
 
 //posts
 router.post('/posts', authenticate(), createPostSchema, PostController.createPost());

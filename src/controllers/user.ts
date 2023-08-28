@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express';
 import HttpStatus from 'http-status-codes';
-import { createUser, findUser, fetchAllUsers } from '../repository/user';
+import { createUser, findUser, fetchAllUsers, featuredUsersOptimized, featuredUsersUnOptimized } from '../repository/user';
 import { ConflictError } from '../errors/ConflictError';
 import { ResourceNotFoundError } from '../errors/ResourceNotFoundError';
 
@@ -53,6 +53,27 @@ export const UserController = {
         } catch (error) {
             next(error)
         }
+    },
+
+    fetchFeaturedUsersUnOptimized: (): RequestHandler => async(req, res, next) => {
+        console.log('fetaured1')
+        try {
+            const all = await featuredUsersUnOptimized()
+            return respond(res, all, HttpStatus.OK)
+        } catch (error) {
+            next(error)
+        }
+    },
+
+    fetchFeaturedUsersOptimized: (): RequestHandler => async(req, res, next) => {
+        console.log('fetaured2')
+        try {
+            const all = await featuredUsersOptimized()
+            return respond(res, all, HttpStatus.OK)
+        } catch (error) {
+            next(error)
+        }
     }
+
 }
 

@@ -22,3 +22,14 @@ export async function createPostTable(): Promise<void> {
     logger.error(`postTable ${error}`);
   }
 }
+
+const indexPostTable = `CREATE INDEX idx_user_id ON posts(user_id);`;
+
+export async function indexPostTableCreator(): Promise<void> {
+  try {
+    const create = await pool.query(indexPostTable);
+    logger.info(`postTableIndex: ${create.command}D`);
+  } catch (error) {
+    logger.error(`postTableIndex ${error}`);
+  }
+}

@@ -3,7 +3,7 @@ import HttpStatus from 'http-status-codes';
 import { createPost, fetchAllPostsForUser } from '../repository/post';
 
 import type { Post, User } from '../interfaces';
-import { respond } from '../utilities';
+import { getCache, setCache, respond } from '../utilities';
 import { findUser } from '../repository/user';
 import { ResourceNotFoundError } from '../errors/ResourceNotFoundError';
 
@@ -26,8 +26,20 @@ export const PostController = {
             if(!user){
                 throw new ResourceNotFoundError('fetching posts for non-existent user');
             }
-            const posts = await fetchAllPostsForUser([user.id] as Partial<Post>);
+            const cacheKey = `user${id}`;
+            /**
+             * check if posts have been cached and return early
+             * else fetch posts from the DB and set in cache
+             */
+            let posts = await getCache(cacheKey);
+            if(!posts){
+                posts = await fetchAllPostsForUser([user.id] as Partial<Post>);
+                await setCache(cacheKey, posts);
+                // in production, it is standard practice to paginate these results to reduce the load on the DB.
+                return respond<Post[]>(res, posts, HttpStatus.OK);
+            }
             return respond<Post[]>(res, posts, HttpStatus.OK);
+            
         } catch (error) {
             next(error)
         }

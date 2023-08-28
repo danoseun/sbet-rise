@@ -27,7 +27,7 @@ const variables = {
   },
 
   services: {
-    
+    redis: process.env.REDIS_URL
   },
   cache: {
     cacheExpiry: Number(process.env.CACHE_EXPIRY)

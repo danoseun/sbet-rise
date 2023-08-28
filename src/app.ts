@@ -19,13 +19,14 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.get('/v1', (req, res) =>
+app.get('/v1/health', (req, res) =>
   res.status(200).json({
     status: 'success',
     message: 'server is up and running',
     data: null
   })
 );
+
 
 app.use('/v1', router);
 

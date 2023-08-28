@@ -8,6 +8,7 @@
     "migrate:dev": "ts-node ./src/database/migrations",
     "seed:dev": "ts-node ./src/database/seeders",
     "start": "node dist/server.js",
+    "migrate": "node dist/database/migrations",
     "prebuild:dev": "rm -rf dist/*",
     "prebuild": "rm -rf dist/*",
     "build:dev": "tsc --project tsconfig.json && tscpaths -p tsconfig.json -s ./src -o ./dist && tsc --watch --preserveWatchOutput",

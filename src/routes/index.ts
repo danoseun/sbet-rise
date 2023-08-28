@@ -6,7 +6,7 @@ import { createCommentSchema, fetchCommentsForPostSchema } from '../validations/
 
 import { authenticate } from '../middleware/authenticate';
 
-import { UserController, PostController } from '../controllers';
+import { UserController, PostController, CommentController } from '../controllers';
 
 export const router = Router();
 
@@ -17,4 +17,8 @@ router.get('/users', authenticate(), UserController.fetchAllUsers());
 
 //posts
 router.post('/posts', authenticate(), createPostSchema, PostController.createPost());
-router.get('/users/:id/posts', fetchPostsForUserSchema, PostController.fetchAllUserPosts())
+router.get('/users/:id/posts', fetchPostsForUserSchema, PostController.fetchAllUserPosts());
+
+//comments
+router.post('/posts/:id/comments', authenticate(), createCommentSchema, CommentController.createComment());
+router.get('/posts/:id/comments', fetchCommentsForPostSchema, CommentController.fetchAllPostComments());

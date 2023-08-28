@@ -7,6 +7,10 @@ export const createPost = async(filters: Partial<Post>): Promise<Post> => {
     return newPost.rows[0];
 }
 
+export const findPost = async(filters: Partial<Post>): Promise<Post> => {
+    const foundPost = await db.query(sql.findPost, filters)
+    return foundPost.rows[0];
+}
 
 export const fetchAllPostsForUser = async(filters?: Partial<Post>): Promise<Post[] | null> => {
     const allUserPosts = await db.query(sql.fetchUserPosts, filters);

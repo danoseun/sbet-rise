@@ -1,32 +1,38 @@
 import { RequestHandler } from 'express';
 import HttpStatus from 'http-status-codes';
-import { createPost, fetchAllPostsForUser } from '../repository/post';
+import { createComment, fetchAllCommentsForPost } from '../repository/comment';
 
-import type { Post, User } from '../interfaces';
+import type { Post, Comment } from '../interfaces';
 import { respond } from '../utilities';
-import { findUser } from '../repository/user';
+import { findPost } from '../repository/post';
 import { ResourceNotFoundError } from '../errors/ResourceNotFoundError';
 
-export const PostController = {
-    createPost: (): RequestHandler => async(req, res, next) => {
-        // depending on the blog size, we may want to scan contents for anything abusive
-        let params = [res.locals.user.id, req.body.content];
+export const CommentController = {
+    createComment: (): RequestHandler => async(req, res, next) => {
+
+        let params = [req.params.id, res.locals.user.id, req.body.content];
         try {
-            const post = await createPost(params as Partial<Post>)
-            return respond<Post>(res, post, HttpStatus.CREATED);
+            const foundPost = await findPost([req.params.id] as Partial<Post>)
+           
+            if(!foundPost){
+                throw new ResourceNotFoundError('attempting to comment on non-existent post');
+            }
+            const comment = await createComment(params as Partial<Comment>)
+            return respond<Comment>(res, comment, HttpStatus.CREATED);
         } catch (error) {
             next(error)
         }
     },
 
-    fetchAllUserPosts: (): RequestHandler => async(req, res, next) => {
+    fetchAllPostComments: (): RequestHandler => async(req, res, next) => {
         const { id } = req.params;
         try {
-            const user = await findUser(['%'+id+'%'] as Partial<User>);
-            if(!user){
-                throw new ResourceNotFoundError('fetching posts for non-existent user');
+            const foundPost = await findPost([id] as Partial<Post>);
+            
+            if(!foundPost){
+                throw new ResourceNotFoundError('fetching comments for non-existent post');
             }
-            const posts = await fetchAllPostsForUser([user.id] as Partial<Post>);
+            const posts = await fetchAllCommentsForPost([foundPost.id] as Partial<Post>);
             return respond<Post[]>(res, posts, HttpStatus.OK);
         } catch (error) {
             next(error)

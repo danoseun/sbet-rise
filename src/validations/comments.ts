@@ -2,6 +2,9 @@ import { celebrate, Joi, Segments } from 'celebrate';
 
 export const createCommentSchema = celebrate(
     {
+      [Segments.PARAMS]: Joi.object().keys({
+        id: Joi.number().positive().required()
+      }),
       [Segments.BODY]: Joi.object().keys({
         content: Joi.string().trim().required()
       })
@@ -9,7 +12,7 @@ export const createCommentSchema = celebrate(
     { abortEarly: false }
   );
 
-  export const fetchCoomentsForPostSchema = celebrate(
+  export const fetchCommentsForPostSchema = celebrate(
     {
       [Segments.PARAMS]: Joi.object().keys({
         id: Joi.number().positive().required()
